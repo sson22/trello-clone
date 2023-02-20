@@ -3,8 +3,9 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
 import Board from "./Components/Board";
+import Trash from "./Components/Trash";
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
   width: 100vw;
   margin: 0 auto;
   justify-content: center;
@@ -23,7 +24,23 @@ function App() {
   const onDragEnd = (info: DropResult) => {
     const { destination, source } = info;
     if (!destination) return;
-    if (destination?.droppableId === source.droppableId) {
+    //Delete Item in the Bin
+    if (destination?.droppableId === "trash") {
+      setToDos((allBoards) => {
+        const boardCopy2 = [...allBoards[source.droppableId]];
+        boardCopy2.splice(source.index, 1);
+        const newAllBoards = {
+          ...allBoards,
+          [source.droppableId]: boardCopy2,
+        };
+
+        return newAllBoards;
+      });
+    }
+    if (
+      destination?.droppableId === source.droppableId &&
+      destination?.droppableId !== "trash"
+    ) {
       // same board movement.
       setToDos((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
@@ -36,14 +53,17 @@ function App() {
         };
       });
     }
-    if (destination.droppableId !== source.droppableId) {
+    if (
+      destination.droppableId !== source.droppableId &&
+      destination?.droppableId !== "trash"
+    ) {
       // cross board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
-        const taskObj = sourceBoard[source.index];
+        const taskObj2 = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination?.index, 0, taskObj);
+        destinationBoard.splice(destination?.index, 0, taskObj2);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
@@ -60,6 +80,7 @@ function App() {
             <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
           ))}
         </Boards>
+        <Trash />
       </Wrapper>
     </DragDropContext>
   );

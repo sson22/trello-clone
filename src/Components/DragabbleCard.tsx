@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { toDoState } from "../atoms";
+import { useSetRecoilState } from "recoil";
 const Card = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;
   margin-bottom: 5px;
@@ -16,8 +18,12 @@ interface IDragabbleCardProps {
   toDoText: string;
   index: number;
 }
-
+// interface IForm {
+//   toDo: string;
+// }
 function DragabbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
+  const setToDos = useSetRecoilState(toDoState);
+  console.log(setToDos);
   return (
     <Draggable draggableId={toDoId + ""} index={index}>
       {(magic, snapshot) => (
@@ -27,7 +33,10 @@ function DragabbleCard({ toDoId, toDoText, index }: IDragabbleCardProps) {
           {...magic.dragHandleProps}
           {...magic.draggableProps}
         >
-          {toDoText}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>{toDoText}</span>
+            <span style={{ width: "17px", cursor: "pointer" }}></span>
+          </div>
         </Card>
       )}
     </Draggable>
