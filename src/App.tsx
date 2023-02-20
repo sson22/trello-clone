@@ -19,6 +19,7 @@ const Boards = styled.div`
   width: 100%;
   gap: 30px;
 `;
+
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
