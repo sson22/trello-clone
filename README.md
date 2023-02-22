@@ -1,3 +1,12 @@
+## Trello clone project
+
+- Simple Trello clone project built by Typescript, ReactJS, Recoil, and Styled Components - Implemented to-do item movement between categories using Beautiful DnD.
+- The state of the application was managed by React library Recoil
+
+<img width="1440" alt="Screen Shot 2023-02-22 at 9 04 13 am" src="https://user-images.githubusercontent.com/103995226/220508798-c1e5cebe-0213-4b06-a09f-c95220fa1f07.png">
+
+## To check the application: https://sson22.github.io/trello-clone/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
